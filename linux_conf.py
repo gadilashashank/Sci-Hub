@@ -27,7 +27,7 @@ elif not os.system("command -v dnf > /dev/null 2>&1"):
 # pacman as Package Manager
 elif not os.system("command -v pacman > /dev/null 2>&1"):
     print("Package Manager is pacman\n")
-    os.system("sudo pacman -S python-pip wget")
+    os.system("sudo pacman -S --needed python-pip wget")
 # slackpkg as Package Manager
 elif not os.system("command -v slackpkg > /dev/null 2>&1"):
     print("Package Manager is slackpkg\n")
@@ -42,7 +42,7 @@ else:
     quit()
 
 # Install dependencies
-os.system("sudo pip3 install BeautifulSoup4 requests")
+os.system("sudo pip3 install BeautifulSoup4 requests lxml")
 # Success
 print()
 print("*"*70)
