@@ -5,7 +5,7 @@
 Here is a list of places from where bits/blocks of code or content have been taken
 for use in the scripts.
 
-Online sources such as StackOverflow are not mentioned.
+Online sources such as StackOverflow and the like are not mentioned.
 
 * [AutoVPN](https://github.com/bakszero/AutoVPN/blob/master/autovpn.sh)
     * What: The "command -v ..." part has been picked up from here.

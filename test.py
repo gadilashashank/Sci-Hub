@@ -1,9 +1,9 @@
 from __future__ import print_function
-import sys
+import platform
 import os
 
 # Python 2.x incompatibility
-if re.match("^2.", sys.version.split("(")[0].strip()):
+if int(platform.python_version_tuple()[0]) < 3:
     print("This script is NOT compatible with Python 2.x")
     print("Use this command to run the script:\n")
     print("python3 test.py\n")

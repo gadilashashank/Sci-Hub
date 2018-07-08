@@ -5,10 +5,10 @@ to run sci_hub.py
 from __future__ import print_function
 import os
 import re
-import sys
+import platform
 
 # Python 2.x incompatibility
-if re.match("^2.", sys.version.split("(")[0].strip()):
+if int(platform.python_version_tuple()[0]) < 3:
     print("This script is NOT compatible with Python 2.x")
     print("Use this command to run the script:\n")
     print("python3 linux_conf.py\n")
