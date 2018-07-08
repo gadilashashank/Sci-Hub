@@ -4,10 +4,11 @@ to run sci_hub.py
 '''
 from __future__ import print_function
 import os
+import re
 import sys
 
 # Python 2.x incompatibility
-if "2." in sys.version:
+if re.match("^2.", sys.version.split("(")[0].strip()):
     print("This script is NOT compatible with Python 2.x")
     print("Use this command to run the script:\n")
     print("python3 mac_conf.py\n")

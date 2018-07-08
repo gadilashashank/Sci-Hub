@@ -15,7 +15,7 @@ import requests
 import sys
 
 # Python 2.x incompatibility
-if "2." in sys.version:
+if re.match("^2.", sys.version.split("(")[0].strip()):
     print("This script is NOT compatible with Python 2.x")
     print("Use this command to run the script:\n")
     print("python3 sci_hub.py\n")
@@ -179,6 +179,7 @@ def move_data(doi):
     temp = doi.replace("/", "_")
     os.system("mkdir %s" % (temp))
     os.system("mv {} {}".format(temp + ".*", temp))
+
 
 # Call primary method and verify URL
 url = validate_url(get_url())

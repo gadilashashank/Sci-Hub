@@ -3,7 +3,7 @@ import sys
 import os
 
 # Python 2.x incompatibility
-if "2." in sys.version:
+if re.match("^2.", sys.version.split("(")[0].strip()):
     print("This script is NOT compatible with Python 2.x")
     print("Use this command to run the script:\n")
     print("python3 test.py\n")
