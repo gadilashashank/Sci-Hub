@@ -1,11 +1,13 @@
 '''
 Sci-Hub Downloader - 1.0
+----
+Description:
 
 This script takes input URL/DOI and tries
 to download the paper from Sci-Hub.
 
-Gadila Shashank Reddy
-24th June, 2018
+Author : Gadila Shashank Reddy
+Date : 24th June, 2018
 '''
 from __future__ import print_function
 from bs4 import BeautifulSoup as bs
@@ -23,9 +25,9 @@ if re.match("^2.", sys.version.split("(")[0].strip()):
 
 
 '''
-This function searches Google and tries
-to extract the URL of Sci-Hub from the
-search results.
+Parameters : None
+Function   : Query Google for sci-hub url
+Returns    : URL/empty string
 '''
 
 
@@ -47,11 +49,10 @@ def get_url():
 
 
 '''
-This function tries to validate if
-input URL is a legit Sci-Hub site
-by checking its title tag.
-( Works for now might need
-  improvisation later.)
+Parameters : URL (string)
+Function   : Checks title tag and validates
+             if url is a sci-hub site
+Returns    : Input Parameter/Empty string
 '''
 
 
@@ -74,12 +75,10 @@ def validate_url(url):
 
 
 '''
-This function is meant to
-be a backup function to fetch
-URL incase the primary function
-fails
-(Better to add more alternate
- methods later.)
+Parameters : URL (string)
+Function   : Alternate to get_url()
+Returns    : Alternate url/empty string
+extra      : Queries twitter page of sci-hub
 '''
 
 
@@ -113,9 +112,9 @@ def try_alternate(url):
 
 
 '''
-This function takes the Sci-Hub URL and
-target URL/DOI and tries to download the
-PDF.
+Parameters : URL, user input (string, string)
+Function   : Request sci-hub and download input paper
+Return     : DOI of reqeusted paper/ empty string
 '''
 
 
@@ -145,9 +144,10 @@ def get_paper(url, target):
 
 
 '''
-This function extracts metadata
-from DOI in JSON format and writes
-it to a text file
+Parameter  : DOI
+Function   : Extract metadata given DOI
+Return     : Nothing
+Side-effect: Text file created
 '''
 
 
@@ -169,9 +169,9 @@ def get_metadata(doi):
 
 
 '''
-This function moves the downloaded files
-into a separate directory in current
-working directory
+Parameter  : DOI
+Function   : Rename and move downloaded files to separate dir.
+Returns    : Nothing
 '''
 
 
