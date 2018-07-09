@@ -4,8 +4,15 @@ to run sci_hub.py
 '''
 from __future__ import print_function
 import os
-import re
 import platform
+import re
+
+if platform.system() != 'Darwin':
+    print("Looks like you are not running on a Mac.")
+    print("If this is a mistake please report here:")
+    print("https://github.com/gadilashashank/Sci-Hub/issues")
+    quit()
+
 
 # Python 2.x incompatibility
 if int(platform.python_version_tuple()[0]) < 3:

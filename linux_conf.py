@@ -4,14 +4,20 @@ to run sci_hub.py
 '''
 from __future__ import print_function
 import os
-import re
 import platform
+import re
 
 # Python 2.x incompatibility
 if int(platform.python_version_tuple()[0]) < 3:
     print("This script is NOT compatible with Python 2.x")
     print("Use this command to run the script:\n")
     print("python3 linux_conf.py\n")
+    quit()
+
+if platform.system() != 'Linux':
+    print("Looks like you are not running a linux machine.")
+    print("If this is a mistake please report here:")
+    print("https://github.com/gadilashashank/Sci-Hub/issues")
     quit()
 
 print("\nsudo password is required to install any missing packages.\n")

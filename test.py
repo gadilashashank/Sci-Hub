@@ -12,10 +12,19 @@ if int(platform.python_version_tuple()[0]) < 3:
     print("*"*30 + "\n" + "\tTEST FAILED" + "\n" + "*"*30)
     quit()
 
+if platform.system() not in ['Linux', 'Darwin']:
+    print("\nYOU HAVE BEEN WARNED")
+    print("Looks like you are not running on GNU/Linux or a Mac")
+    print("This program is not guarenteed to work on Windows of any form\n")
+
 
 # import built in dependencies and check
 try:
-    import os, sys, re, platform, json
+    import os
+    import sys
+    import re
+    import platform
+    import json
     print("Built in modules imported successfully.\n")
 except(ImportError):
     print("Error in importing built in dependencies\n")
