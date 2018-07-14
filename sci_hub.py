@@ -1,20 +1,20 @@
 '''
-Sci-Hub Downloader - 1.0
+Sci-Hub Downloader
 ----
 Description:
 
 This script takes input URL/DOI and tries
 to download the paper from Sci-Hub.
 
-Author : Gadila Shashank Reddy
-Date : 24th June, 2018
+Version : 2.0
+Date    : 14th July, 2018
+Author  : Gadila Shashank Reddy
 '''
 from __future__ import print_function
-from bs4 import BeautifulSoup as bs
+import argparse
 import os
-import re
-import requests
 import platform
+import re
 
 # Python 2.x incompatibility
 if int(platform.python_version_tuple()[0]) < 3:
@@ -23,15 +23,30 @@ if int(platform.python_version_tuple()[0]) < 3:
     print("python3 sci_hub.py\n")
     quit()
 
+if platform.system() not in ['Linux', 'Darwin']:
+    print("\nYOU HAVE BEEN WARNED")
+    print("Looks like you are not running on GNU/Linux or a Mac")
+    print("This program is not guarenteed to work on Windows\n")
 
-'''
-Parameters : None
-Function   : Query Google for sci-hub url
-Returns    : URL/empty string
-'''
+from bs4 import BeautifulSoup as bs
+import requests
+
+# Define command line arguments
+parser = argparse.ArgumentParser(description="Sci-Hub downloader: Utility to \
+                                             download from Sci-Hub")
+parser.add_argument("target",
+                    help="URL/DOI to download PDF")
+parser.add_argument("-p",
+                    help="Absolute path to save files to\
+                    (Default = ~/Downloads/sci_hub)")
+parser.add_argument("-b",
+                    help="Command to invoke browser")
+args = parser.parse_args()
 
 
+# Get Sci-Hub URL from Google
 def get_url():
+    print("Trying primary method.")
     # Query Google and create soup object.
     response = requests.get("https://www.google.com/search?&q=sci-hub")
     soup = bs(response.content, "lxml")
@@ -44,45 +59,12 @@ def get_url():
         return url
     else:
         print("URL from primary method not found.\n")
-        print("Trying alternate method\n")
         return ''
 
 
-'''
-Parameters : URL (string)
-Function   : Checks title tag and validates
-             if url is a sci-hub site
-Returns    : Input Parameter/Empty string
-'''
-
-
-def validate_url(url):
-    print("Validating " + url + "\n")
-    # Query input URL and create
-    # soup object
-    if not url:
-        return ''
-    response = requests.get(url)
-    soup = bs(response.content, "lxml")
-    # Checks title and returns the input
-    # Else returns empty string
-    if soup.title.text == "Sci-Hub: removing barriers in the way of science":
-        print(url + " validated\n")
-        return url
-    else:
-        print(url + " found invalid.\n")
-        return ''
-
-
-'''
-Parameters : URL (string)
-Function   : Alternate to get_url()
-Returns    : Alternate url/empty string
-extra      : Queries twitter page of sci-hub
-'''
-
-
-def try_alternate(url):
+# Alterane URL from Twitter
+def try_alternate():
+    print("Trying alternate method.")
     # Query twitter page of Sci-Hub
     # and create soup object
     response = requests.get("https://twitter.com/Sci_Hub")
@@ -97,31 +79,32 @@ def try_alternate(url):
             # if not present
             if "://" not in alt_url:
                 alt_url = "https://" + alt_url
-    # If primary function returns empty
-    # string, return alt_url after validating
-    if not url:
-        print("Alternate URL is: " + alt_url + "\n")
-        return validate_url(alt_url + "/")
-    # If input URL is same as alt_url then
-    # return empty string. This function would have
-    # been called either when the input URL is
-    # empty or invalid.
-    if re.match(alt_url, url) or re.match(url, alt_url):
-        print("Alternate URL could not be fetched")
-        return ''
+            print("Alternate URL is: " + alt_url + "\n")
+            return alt_url + "/"
+        else:
+            return ""
 
 
-'''
-Parameters : URL, user input (string, string)
-Function   : Request sci-hub and download input paper
-Return     : DOI of reqeusted paper/ empty string
-'''
+# Validate URL by checking title
+def validate_url(url):
+    print("Validating {}".format(url))
+    # Send request to given url
+    # and compare title tags
+    response = requests.get(url)
+    soup = bs(response.content, "lxml")
+    if soup.title.text == "Sci-Hub: removing barriers in the way of science":
+        print("{} validated\n".format(url))
+        return url
+    else:
+        print("{} not valid.".format(url))
+        return ""
 
 
-def get_paper(url, target):
+# Extract DOI, Mirror
+def get_links(target):
     # Get response of target page
     # from Sci-Hub and create soup object
-    response = requests.get(url+target)
+    response = requests.get(target)
     soup = bs(response.content, "lxml")
     # Extract DOI
     for i in soup.find_all("div", attrs={"class": "button", "id": "reload"}):
@@ -129,76 +112,86 @@ def get_paper(url, target):
     # Extract download link
     for i in soup.find_all("div", attrs={"class": "button", "id": "save"}):
         mirror = i.p.a['onclick'].split("'")[1]
-    # Returns empty string if no download link
-    # found.
-        if not mirror:
-            return ''
-    # Download pdf and return DOI
+        return doi, mirror
+
+
+# Download paper
+def download_paper(mirror, args):
+    # Response from mirror link
+    print("Sending request")
+    response = requests.get(mirror)
+    print("Response received. Analyzing...\n")
+    os.system("sleep 1")
+    # If header states PDF then write
+    # content to file
+    if response.headers['content-type'] == "application/pdf":
+        size = round(int(response.headers['Content-Length'])/1000000, 2)
+        print("Downloaded {} MB\n".format(size))
+        with open("wuieobgefn.pdf", "wb") as f:
+            f.write(response.content)
+        f.close()
+    # Check if firefox exists and open download link
+    # in firefox
+    elif re.match("text/html", response.headers['content-type']):
+        print("Looks like captcha encountered.")
+        if not os.system("command -v firefox 1,2>/dev/null"):
+            print("Opening link in firefox...")
+            os.system("firefox {}".format(mirror))
+    # Check for browser command line arg
+        elif args.b:
+            print("Opening link in browser...")
+            os.system("{} {}".format(args.b, mirror))
+    # Print download link
         else:
-            print("\nIf somehow the download fails visit " +
-                  "this link in a browser: \n")
-            print(mirror + "\n")
-            os.system("wget -O {} {}".format(doi.replace("/", "_") + ".pdf",
-                                             mirror))
-            return doi
+            print("Open this link in a browser.")
+            print(mirror)
 
 
-'''
-Parameter  : DOI
-Function   : Extract metadata given DOI
-Return     : Nothing
-Side-effect: Text file created
-'''
+# Rename and move
+def move_file(doi, args):
+    if doi:
+        name = doi.replace("/", "_") + ".pdf"
+        if os.path.exists("./wuieobgefn.pdf"):
+            if not args.p:
+                os.system("mv ./wuieobgefn.pdf {}".format(name))
+                os.system("mkdir ~/Downloads/sci_hub/ 2>/dev/null")
+                os.system("mv {} ~/Downloads/sci_hub/".format(name))
+                print("Files saved in ~/Downloads/sci_hub/ as {}".format(name))
+            elif args.p and os.path.exists(args.p):
+                os.system("mv ./wuieobgefn.pdf {}".format(name))
+                os.system("mv {} {}".format(name, args.p))
+                print("Files saved at {} as {}".format(args.p, name))
+            else:
+                print("Looks like mentioned path does not exist")
+                print("Saving file at {} as {}".format(os.system("pwd"), name))
+                os.system("mv ./wuieobgefn.pdf {}".format(name))
+    else:
+        print("File saved as wuieobgefn.pdf in current directory")
+
+# Main function
+def main():
+    sci_hub = validate_url(get_url())
+    if not sci_hub:
+        sci_hub = validate_url(try_alternate())
+        if not sci_hub:
+            print("Sci-Hub mirror not found")
+            print("Try after some time")
+            quit()
+    else:
+        url = sci_hub + args.target
+        print("Extracting download links...")
+        doi, mirror = get_links(url)
+        if not mirror:
+            print("Download link not available")
+            print("Please try after sometime")
+            os.system("sleep 10")
+            quit()
+        else:
+            print("Downloading paper...")
+            download_paper(mirror, args)
+            move_file(doi, args)
 
 
-def get_metadata(doi):
-    import json
-    # Define header and send request
-    header = {"Accept": "application/vnd.citationstyles.csl+json"}
-    response = requests.get("http://dx.doi.org/" + doi, headers=header)
-    # Convert response into JSON object
-    data = response.json()
-    # Define name of output file
-    output_file = doi.replace("/", "_") + ".txt"
-    # Write to output file
-    with open(output_file, 'w') as f:
-        f.write(json.dumps(data, indent=4, sort_keys=True))
-    f.close()
-    print("\nFiles saved in {} directory\n".format(doi.replace("/", "_")))
-    return
-
-
-'''
-Parameter  : DOI
-Function   : Rename and move downloaded files to separate dir.
-Returns    : Nothing
-'''
-
-
-def move_data(doi):
-    temp = doi.replace("/", "_")
-    os.system("mkdir %s" % (temp))
-    os.system("mv {} {}".format(temp + ".*", temp))
-
-
-# Call primary method and verify URL
-url = validate_url(get_url())
-
-# If invalid try alternate method.
-if not url:
-    url = try_alternate(url)
-
-print("Enter URL/DOI of paper to be fetched:")
-print("URL should be complete eg: https://<some URL>/<some path>:\n")
-target = input()
-
-doi = get_paper(url, target)
-
-ext = input("Extract metadata into a separate text file?[y/n]\n")
-if re.match("[Yy]+(es)?", ext):
-    get_metadata(doi)
-if re.match("[Nn]+(o)?", ext):
-    print("\nFile saved in {} directory\n".format(doi.replace("/", "_")))
-
-move_data(doi)
+main()
+print("\nThanks for using.\n")
 quit()

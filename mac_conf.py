@@ -1,5 +1,5 @@
 '''
-Configuration file for Linux machines
+Configuration file for MacOS
 to run sci_hub.py
 '''
 from __future__ import print_function
@@ -7,6 +7,7 @@ import os
 import platform
 import re
 
+# Non MacOS warning
 if platform.system() != 'Darwin':
     print("Looks like you are not running on a Mac.")
     print("If this is a mistake please report here:")
@@ -22,7 +23,7 @@ if int(platform.python_version_tuple()[0]) < 3:
     quit()
 
 # Install dependencies
-os.system("pip3 install requests BeautifulSoup4")
+os.system("pip3 install requests BeautifulSoup4 lxml")
 
 # Success
 print()

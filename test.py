@@ -13,22 +13,19 @@ if int(platform.python_version_tuple()[0]) < 3:
     quit()
 
 if platform.system() not in ['Linux', 'Darwin']:
-    print("\nYOU HAVE BEEN WARNED")
     print("Looks like you are not running on GNU/Linux or a Mac")
-    print("This program is not guarenteed to work on Windows of any form\n")
-
+    print("If this test is successful then you can run: ")
+    print("\npython3 sci_hub.py\n")
 
 # import built in dependencies and check
 try:
-    import os
+    import argparse
     import sys
     import re
-    import platform
-    import json
     print("Built in modules imported successfully.\n")
 except(ImportError):
     print("Error in importing built in dependencies\n")
-    print("Make sure os, sys, re, platform, json modules can be imported\n")
+    print("Make sure os, sys, re, platform, modules can be imported\n")
     print("Try reinstalling python3\n")
     print("*"*30 + "\n" + "\tTEST FAILED" + "\n" + "*"*30)
     quit()
