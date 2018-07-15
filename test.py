@@ -47,5 +47,8 @@ def main():
     resp = requests.get("https://google.com")
     soup = BeautifulSoup(resp.content, "lxml")
     re.match("fojwe", "orji")
-    sys.version
+    print(sys.version)
     parser = argparse.ArgumentParser()
+    print(parser.parse_args)
+
+main()
