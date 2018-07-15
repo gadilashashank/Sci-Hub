@@ -5,7 +5,6 @@ to run sci_hub.py
 from __future__ import print_function
 import os
 import platform
-import re
 
 # Python 2.x incompatibility
 if int(platform.python_version_tuple()[0]) < 3:
