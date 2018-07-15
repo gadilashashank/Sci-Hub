@@ -46,6 +46,7 @@ print("*"*30 + "\n" + "\tTEST PASSED" + "\n" + "*"*30)
 def main():
     resp = requests.get("https://google.com")
     soup = BeautifulSoup(resp.content, "lxml")
+    print("soup.title")
     re.match("fojwe", "orji")
     print(sys.version)
     parser = argparse.ArgumentParser()
