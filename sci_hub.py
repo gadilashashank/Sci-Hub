@@ -6,14 +6,15 @@ Description:
 This script takes input URL/DOI and tries
 to download the paper from Sci-Hub.
 
-Version : 2.0
-Date    : 14th July, 2018
+Version : 2.1
+Date    : 16th July, 2018
 Author  : Gadila Shashank Reddy
 '''
 from __future__ import print_function
 import argparse
 import os
 import platform
+import proxy
 import re
 
 # Python 2.x incompatibility
@@ -48,7 +49,8 @@ args = parser.parse_args()
 def get_url():
     print("Trying primary method.")
     # Query Google and create soup object.
-    response = requests.get("https://www.google.com/search?&q=sci-hub")
+    response = requests.get("https://www.google.com/search?&q=sci-hub",
+                            proxies=proxy.proxies)
     soup = bs(response.content, "lxml")
     # Target url is inside a cite tag.
     url = soup.cite.text
@@ -67,7 +69,8 @@ def try_alternate():
     print("Trying alternate method.")
     # Query twitter page of Sci-Hub
     # and create soup object
-    response = requests.get("https://twitter.com/Sci_Hub")
+    response = requests.get("https://twitter.com/Sci_Hub",
+                            proxies=proxy.proxies)
     soup = bs(response.content, "lxml")
     # Try to extract the URL present
     # in the side panel as alt_url
@@ -90,7 +93,7 @@ def validate_url(url):
     print("Validating {}".format(url))
     # Send request to given url
     # and compare title tags
-    response = requests.get(url)
+    response = requests.get(url, proxies=proxy.proxies)
     soup = bs(response.content, "lxml")
     if soup.title.text == "Sci-Hub: removing barriers in the way of science":
         print("{} validated\n".format(url))
@@ -104,7 +107,7 @@ def validate_url(url):
 def get_links(target):
     # Get response of target page
     # from Sci-Hub and create soup object
-    response = requests.get(target)
+    response = requests.get(target, proxies=proxy.proxies)
     soup = bs(response.content, "lxml")
     # Extract DOI
     for i in soup.find_all("div", attrs={"class": "button", "id": "reload"}):
@@ -119,7 +122,7 @@ def get_links(target):
 def download_paper(mirror, args):
     # Response from mirror link
     print("Sending request")
-    response = requests.get(mirror)
+    response = requests.get(mirror, proxies=proxy.proxies)
     print("Response received. Analyzing...\n")
     os.system("sleep 1")
     # If header states PDF then write
@@ -167,6 +170,7 @@ def move_file(doi, args):
                 os.system("mv ./wuieobgefn.pdf {}".format(name))
     else:
         print("File saved as wuieobgefn.pdf in current directory")
+
 
 # Main function
 def main():

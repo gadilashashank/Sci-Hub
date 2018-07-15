@@ -30,3 +30,17 @@ In this version every file has been radically changed and a summary is given.
 
 * Add support for proxy.
 * Take care of redirects
+
+## v2.1 (16th July, 2018)
+
+Ok, so this is the first update to the application.
+
+Changes in this version include
+
+* Proxy support added for the main script. Configuration scripts **don't**
+  support proxy.
+
+* Add badges to README.
+
+Instructions to setup proxy can be found in the proxy.py file in the form
+of comments or contact your system administrator for help in setting it up.

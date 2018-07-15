@@ -1,16 +1,9 @@
+![Version 2.1](https://img.shields.io/badge/Version-2.1-brightgreen.svg)
+![Release 16July, 2018](https://img.shields.io/badge/Release-16July,2018-8000bf.svg)
+![License AGPL-3.0](https://img.shields.io/badge/Lincense-AGPL--3.0-00688B.svg)
+![Author Gadila Shashank Reddy](https://img.shields.io/badge/Author-Gadila_Shashank_Reddy-0066cc.svg)
+
 # Sci-Hub Downloader
----
-A script to download papers from Sci-Hub.
-
-**Initial Release** - 24 June, 2018
-
-**Current Version** - 2.0
-
-**Update release** - 14th July, 2018
-
-**Author** - Gadila Shashank Reddy
-
----
 
 ## Disclaimer
 
@@ -218,16 +211,22 @@ prints out the download link which can be opened in any browser directly.
 
 This flag displays help message.
 
+### Use the script over proxy
+
+If you want the script to send all requests via a proxy then you have to edit
+the **proxy.py** file. By default all proxies are set to none. Relevant usage
+instructions are mentioned in the file itself.
+
+If you know that you need a proxy setting but don't know how to do so, it is
+better if you contact your system administrator.
+
+None of the configuration files run on proxy. So you might need to set the
+dependencies on a connection that does not need proxy.
+
 ## Known issues
 
 Though the script tries its best in doing its job is has few issues/limitations.
 These are mentioned here.
-
-* Proxy
-  * None of the network transactions in the script are configured to run over
-    proxy
-  * If proxy is required, the user should manually alter the script for now.
-    This will be fixed in a later update.
 
 * Unexpected redirects
   * Sometimes sci-hub redirects requests to libgen and can lead to unexpected
@@ -293,5 +292,6 @@ Thus it is assumed that the scripts should function properly on python 3.5+
 provided the dependencies are proper. Functioning in Python 3 versions below
 3.5 are also expected to work without any issues.
 
-Still if there is any problem feel free to create an issue [here](https://github.com/gadilashashank/Sci-Hub/issues) by
-mentioning the relevant details.
+Still if there is any problem feel free to create an issue
+[here](https://github.com/gadilashashank/Sci-Hub/issues) by mentioning the
+relevant details.
