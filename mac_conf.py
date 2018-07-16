@@ -5,7 +5,6 @@ to run sci_hub.py
 from __future__ import print_function
 import os
 import platform
-import re
 
 # Non MacOS warning
 if platform.system() != 'Darwin':

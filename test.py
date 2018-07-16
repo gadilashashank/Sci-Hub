@@ -1,6 +1,5 @@
 from __future__ import print_function
 import platform
-import os
 
 print()
 
@@ -20,8 +19,9 @@ if platform.system() not in ['Linux', 'Darwin']:
 # import built in dependencies and check
 try:
     import argparse
-    import sys
+    import os
     import re
+    import sys
     print("Built in modules imported successfully.\n")
 except(ImportError):
     print("Error in importing built in dependencies\n")
@@ -42,3 +42,14 @@ except(ImportError):
     quit()
 
 print("*"*30 + "\n" + "\tTEST PASSED" + "\n" + "*"*30)
+
+def main():
+    resp = requests.get("https://google.com")
+    soup = BeautifulSoup(resp.content, "lxml")
+    print("soup.title")
+    re.match("fojwe", "orji")
+    print(sys.version)
+    parser = argparse.ArgumentParser()
+    print(parser.parse_args)
+
+main()
