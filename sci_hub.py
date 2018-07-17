@@ -143,6 +143,7 @@ def download_paper(mirror, args):
         wbb.open_new(mirror)
         quit()
 
+
 # Rename and move
 def move_file(doi, args):
     if doi:

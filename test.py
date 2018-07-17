@@ -32,7 +32,8 @@ try:
     import time
     import webbrowser
 except(ImportError):
-    print("Either argparse, os platform, time, webbrowser or re could not be imported")
+    print("Either argparse, os platform, time, webbrowser"
+          + "or re could not be imported")
     quit()
 
 try:
@@ -65,3 +66,10 @@ else:
 
 if re.match("oir", "air"):
     print("yes")
+
+print("\nNow your default web browser will open")
+print("Don't be scared, I haven't hacked your computer :P\n")
+print("If it doesn't then try setting a default browser"
+      + "for the script to work properly")
+time.sleep(2)
+webbrowser.open_new("https://google.com")
