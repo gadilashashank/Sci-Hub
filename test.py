@@ -28,7 +28,6 @@ print("This is a test file and does nothing.")
 try:
     import argparse
     import os
-    import platform
     import re
 except(ImportError):
     print("Either argparse, os platform or re could not be imported")
@@ -48,7 +47,7 @@ args = parser.parse_args()
 
 print("\n" + "*"*50 + "\n" + "YOUR TEST IS ALREADY SUCCESSFUL")
 print("The next output is to satisfy Codacy :/\n")
-print( "You can safely ignore the output next\n" + "*"*50 + "\n")
+print("You can safely ignore the output next\n" + "*"*50 + "\n")
 
 
 print(os.listdir("./"))
