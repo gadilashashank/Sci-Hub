@@ -24,7 +24,6 @@ fi
 echo "Installing pip3..."
 
 command -v pip3 > /dev/null 2>&1 || {
-
 if command -v apt 2>&1
 then
 	sudo apt update && apt install python3-pip
@@ -33,7 +32,7 @@ then
 	sudo dnf update && dnf install python3-pip
 elif command -v pacman 2>&1
 then
-	sudo pacman -S --needed python-pip3
+	sudo pacman -S --needed python-pip
 elif command -v slackpkg 2>&1
 then
 	sudo slackpkg update && slackpkg install python-pip
@@ -45,16 +44,17 @@ fi
 }
 
 echo "Installing python dependencies..."
-sudo pip3 install requests beautifulsoup4 lxml
+pip3 install requests beautifulsoup4 lxml
 
 if [ $? != 0 ]
 then
 	printf "\n"
-	printf "%0.s*" {1..25}
+	printf "%0.s*" {1..60}
 	printf "\n"
 	printf "Configuration FALIED\n"
 	printf "requests or beautifulsoup4 modules failed to install"
-	printf "%0.s*" {1..25}
+	printf "\n"
+	printf "%0.s*" {1..60}
 	printf "\n"
 	exit
 fi

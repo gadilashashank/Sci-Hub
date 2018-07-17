@@ -14,7 +14,7 @@ from __future__ import print_function
 import argparse
 import os
 import platform
-import proxy
+import proxy_conf
 import re
 import time
 import webbrowser as wbb
@@ -39,11 +39,6 @@ parser = argparse.ArgumentParser(description="Sci-Hub downloader: Utility to \
                                              download from Sci-Hub")
 parser.add_argument("target",
                     help="URL/DOI to download PDF")
-parser.add_argument("-p",
-                    help="Absolute path to save files to\
-                    (Default = ~/Downloads/sci_hub)")
-parser.add_argument("-b",
-                    help="Command to invoke browser")
 args = parser.parse_args()
 
 
@@ -52,7 +47,7 @@ def get_url():
     print("Trying primary method.")
     # Query Google and create soup object.
     response = requests.get("https://www.google.com/search?&q=sci-hub",
-                            proxies=proxy.proxies)
+                            proxies=proxy_conf.proxies)
     soup = bs(response.content, "lxml")
     # Target url is inside a cite tag.
     url = soup.cite.text
@@ -72,7 +67,7 @@ def try_alternate():
     # Query twitter page of Sci-Hub
     # and create soup object
     response = requests.get("https://twitter.com/Sci_Hub",
-                            proxies=proxy.proxies)
+                            proxies=proxy_conf.proxies)
     soup = bs(response.content, "lxml")
     # Try to extract the URL present
     # in the side panel as alt_url
@@ -95,7 +90,7 @@ def validate_url(url):
     print("Validating {}".format(url))
     # Send request to given url
     # and compare title tags
-    response = requests.get(url, proxies=proxy.proxies)
+    response = requests.get(url, proxies=proxy_conf.proxies)
     soup = bs(response.content, "lxml")
     if soup.title.text == "Sci-Hub: removing barriers in the way of science":
         print("{} validated\n".format(url))
@@ -109,7 +104,7 @@ def validate_url(url):
 def get_links(target):
     # Get response of target page
     # from Sci-Hub and create soup object
-    response = requests.get(target, proxies=proxy.proxies)
+    response = requests.get(target, proxies=proxy_conf.proxies)
     soup = bs(response.content, "lxml")
     # Extract DOI
     for i in soup.find_all("div", attrs={"class": "button", "id": "reload"}):
@@ -124,7 +119,7 @@ def get_links(target):
 def download_paper(mirror, args):
     # Response from mirror link
     print("Sending request")
-    response = requests.get(mirror, proxies=proxy.proxies)
+    response = requests.get(mirror, proxies=proxy_conf.proxies)
     print("Response received. Analyzing...\n")
     time.sleep(1)
     # If header states PDF then write
@@ -149,19 +144,9 @@ def move_file(doi, args):
     if doi:
         name = doi.replace("/", "_") + ".pdf"
         if os.path.exists("./wuieobgefn.pdf"):
-            if not args.p:
-                os.rename("wuieobgefn.pdf", name)
-                os.system("mkdir ~/Downloads/sci_hub/")
-                os.system("mv {} ~/Downloads/sci_hub/".format(name))
-                print("Files saved in ~/Downloads/sci_hub/ as {}".format(name))
-            elif args.p and os.path.exists(args.p):
-                os.rename("wuieobgefn.pdf", name)
-                os.system("mv {} {}".format(name, args.p))
-                print("Files saved at {} as {}".format(args.p, name))
-            else:
-                print("Looks like mentioned path does not exist")
-                print("Saving file at {} as {}".format(os.system("pwd"), name))
-                os.rename("wuieobgefn.pdf", name)
+            os.rename("wuieobgefn.pdf", name)
+            os.system("mv {} ./Downloads/".format(name))
+            print("Files saved in ./Downloads/ as {}".format(name))
     else:
         print("File saved as wuieobgefn.pdf in current directory")
 

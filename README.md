@@ -74,6 +74,29 @@ required.
 pip3 install requests beautifulsoup4 lxml
 ```
 
+Regardless of OS, run the *test.py* file as mentioned below to ensure that
+everything works properly.
+Make sure you can spot the success message in the output.
+
+Sample output
+```md
+$ python3 test.py https://google.com
+This is a test file and does nothing.
+
+**************************************************
+YOUR TEST IS ALREADY SUCCESSFUL
+The next output is to satisfy Codacy :/
+
+You can safely ignore the output next
+**************************************************
+
+[SOME OUTPUT COMES HERE]
+
+```
+
+If you don't get a similar success message as shown above then try to solve the
+problem by reading the error messages before filing a bug report.
+
 ## A word
 
 Friendly warnings are printed whenever the script is used in an unexpected manner.
@@ -98,7 +121,7 @@ After ensuring everything is set, fire up sci_hub.py
 
 ```md
 $ python3 sci_hub.py -h
-usage: sci_hub.py [-h] [-p P] [-b B] target
+usage: sci_hub.py [-h] target
 
 Sci-Hub downloader: Utility to download from Sci-Hub
 
@@ -107,11 +130,7 @@ positional arguments:
 
 optional arguments:
   -h, --help  show this help message and exit
-  -p P        Absolute path to save files to (Default = ~/Downloads/sci_hub)
-  -b B        Command to invoke browser
 ```
-
-The different command line arguments accepted by the script are briefly explained.
 
 ### Target
 
@@ -134,22 +153,6 @@ Example usage
 $ python3 sci_hub.py 10.1109/MS.1987.229797
 $ python3 sci_hub.py https://ieeexplore.ieee.org/document/1695678/
 ```
-
-### -b
-
-This optional argument can be used to specify the command that needs to be
-invoked to open the browser. This argument need not be specified if
-**Mozilla Firefox** is installed and can be invoked with *firefox*
-
-Whenever a captcha is encountered the script can automatically fire up the
-browser and navigate to the download link.
-
-```md
-$ python3 sci_hub.py -b chrome 10.1109/MS.1987.229797
-```
-
-If this argument is not mentioned and a captcha is encountered, then the script
-prints out the download link which can be opened in any browser directly.
 
 ### -h
 
@@ -239,3 +242,8 @@ provided the dependencies are proper. Functioning in Python 3 versions below
 Still if there is any problem feel free to create an issue
 [here](https://github.com/gadilashashank/Sci-Hub/issues) by mentioning the
 relevant details.
+
+While reporting a bug please include the complete output after running test.py
+The output prints out some system related information **none** of which can be
+used to individually identify the user. This information is required **only** for 
+debugging purposes and nothing beyond that whatsoever.
