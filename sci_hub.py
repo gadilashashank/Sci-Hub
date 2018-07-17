@@ -17,6 +17,7 @@ import platform
 import proxy_conf
 import re
 import time
+import update
 import webbrowser as wbb
 
 # Python 2.x incompatibility
@@ -40,6 +41,13 @@ parser = argparse.ArgumentParser(description="Sci-Hub downloader: Utility to \
 parser.add_argument("target",
                     help="URL/DOI to download PDF")
 args = parser.parse_args()
+
+if update.check_update():
+    print("Do you want to update the codebase?[y/n]")
+    dl = input()
+    if dl == "y" or dl == "Y":
+        os.system("git pull")
+        quit()
 
 
 # Get Sci-Hub URL from Google
