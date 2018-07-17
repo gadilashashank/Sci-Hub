@@ -1,6 +1,6 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f10b5a4f5f73497399d175f613824574)](https://www.codacy.com/app/shashankgadila/Sci-Hub?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gadilashashank/Sci-Hub&amp;utm_campaign=Badge_Grade)
-![Version 2.1](https://img.shields.io/badge/Version-2.1-brightgreen.svg)
-![Release 16July, 2018](https://img.shields.io/badge/Release-16July,2018-8000bf.svg)
+![Version 2.2](https://img.shields.io/badge/Version-2.2-brightgreen.svg)
+![Release 17July, 2018](https://img.shields.io/badge/Release-17July,2018-8000bf.svg)
 ![License AGPL-3.0](https://img.shields.io/badge/Lincense-AGPL--3.0-00688B.svg)
 ![Author Gadila Shashank Reddy](https://img.shields.io/badge/Author-Gadila_Shashank_Reddy-0066cc.svg)
 
