@@ -127,7 +127,7 @@ def download_paper(mirror, args):
     if response.headers['content-type'] == "application/pdf":
         size = round(int(response.headers['Content-Length'])/1000000, 2)
         print("Downloaded {} MB\n".format(size))
-        with open("wuieobgefn.pdf", "wb") as f:
+        with open("./Downloads/wuieobgefn.pdf", "wb") as f:
             f.write(response.content)
         f.close()
     # Check if firefox exists and open download link
@@ -135,6 +135,7 @@ def download_paper(mirror, args):
     elif re.match("text/html", response.headers['content-type']):
         print("Looks like captcha encountered.")
         print("Download link is \n" + mirror + "\n")
+        time.sleep(2)
         wbb.open_new(mirror)
         quit()
 
@@ -143,12 +144,11 @@ def download_paper(mirror, args):
 def move_file(doi, args):
     if doi:
         name = doi.replace("/", "_") + ".pdf"
-        if os.path.exists("./wuieobgefn.pdf"):
-            os.rename("wuieobgefn.pdf", name)
-            os.system("mv {} ./Downloads/".format(name))
-            print("Files saved in ./Downloads/ as {}".format(name))
+        if os.path.exists("./Downloads/wuieobgefn.pdf"):
+            os.rename("./Downloads/wuieobgefn.pdf", "./Downloads/" + name)
+            print("Files saved at ./Downloads/" + name)
     else:
-        print("File saved as wuieobgefn.pdf in current directory")
+        print("File saved as wuieobgefn.pdf in ./Downloads directory")
 
 
 # Main function

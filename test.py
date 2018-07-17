@@ -92,7 +92,7 @@ response = requests.get(args.target)
 if response.status_code == requests.codes.ok:
     try:
         soup = bs(response.content, "lxml")
-    except:
+    except Exception:
         print("Check is lxml parser is installed")
     print(soup.title.text)
 else:

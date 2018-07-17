@@ -31,9 +31,12 @@ In this version every file has been radically changed and a summary is given.
 * Add support for proxy.
 * Take care of redirects
 
-## v2.1 (16th July, 2018)
+## v2.1 (17th July, 2018)
 
-Ok, so this is the first update to the application.
+Technically this update should have been named as v3.0
+
+Ok, so this is the first update to the application and trust me, it's a very huge
+one.
 
 Changes in this version include
 
@@ -41,6 +44,14 @@ Changes in this version include
   support proxy.
 
 * Add badges to README.
+
+* Include Codacy for code review.
+
+* Decrease code complexity by using built-in modules and getting rid of all
+  command line options as a result. Except the input DOI/URL ofc
+
+* test.py now has dual purpose: it checks for errors and prints out useful
+  data for debugging purposes only.
 
 Instructions to setup proxy can be found in the proxy.py file in the form
 of comments or contact your system administrator for help in setting it up.
