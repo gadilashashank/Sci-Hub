@@ -1,4 +1,3 @@
-import os
 import json
 import requests
 
@@ -14,6 +13,8 @@ def check_update():
     if j['version'] > cur_version:
         print("\nNew version " + j['version'] + " released on "
               + j["release date"] + "\n")
+        print("run git pull afterwards")
         return True
     else:
+        print("Up to date")
         return False

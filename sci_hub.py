@@ -42,12 +42,7 @@ parser.add_argument("target",
                     help="URL/DOI to download PDF")
 args = parser.parse_args()
 
-if update.check_update():
-    print("Do you want to update the codebase?[y/n]")
-    dl = input()
-    if dl == "y" or dl == "Y":
-        os.system("git pull")
-        quit()
+update.check_update()
 
 
 # Get Sci-Hub URL from Google
