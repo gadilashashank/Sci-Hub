@@ -1,16 +1,10 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f10b5a4f5f73497399d175f613824574)](https://www.codacy.com/app/shashankgadila/Sci-Hub?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gadilashashank/Sci-Hub&amp;utm_campaign=Badge_Grade)
+![Version 2.1](https://img.shields.io/badge/Version-2.1-brightgreen.svg)
+![Release 16July, 2018](https://img.shields.io/badge/Release-16July,2018-8000bf.svg)
+![License AGPL-3.0](https://img.shields.io/badge/Lincense-AGPL--3.0-00688B.svg)
+![Author Gadila Shashank Reddy](https://img.shields.io/badge/Author-Gadila_Shashank_Reddy-0066cc.svg)
+
 # Sci-Hub Downloader
----
-A script to download papers from Sci-Hub.
-
-**Initial Release** - 24 June, 2018
-
-**Current Version** - 2.0
-
-**Update release** - 14th July, 2018
-
-**Author** - Gadila Shashank Reddy
-
----
 
 ## Disclaimer
 
@@ -27,21 +21,33 @@ going through multiple sites that are not legit sci-hub mirrors via a
 
 Hope you like it!
 
-## Requirements
+## Installation
 
-### For UNIX/Linux
+### Windows
 
-* Python 3.x
+This application is **NOT guaranteed** to work on Windows systems directly. It
+is advised to run it on a *Windows subsystem for Linux* a.ka.
+*Bash on Ubuntu on Windows* or on a Linux virtual machine. Please note that at
+the time of writing this document none of these methods have been tested for
+proper functioning.
+
+### GNU/Linux
+
+If you are using a Linux system, simply run the *configure.sh*, which is a bash script
+that tries to install all the dependencies. Currently, this script can
+automatically configure systems which use **apt, dnf, pacman or slackpkg**
+as their package managers.
+
 ```md
-sudo apt update
-sudo apt install python3
+sudo bash configure.sh
 ```
-The command may vary across different package managers but the end goal is to
-install Python 3.x
 
-### For Mac
+Otherwise refer REQUIREMENTS.md file and manually install the mentioned dependencies.
 
-* Homebrew
+### MacOS
+
+Run the following commands
+* Install Homebrew
 
 ```md
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -62,21 +68,43 @@ search should help.
 sudo easy_install python3-pip
 ```
 
-### Windows
+Next run configure.sh file or the following command. I'm not sure if sudo is
+required.
 
-This application is **NOT guaranteed** to work on Windows systems directly. It
-is advised to run it on a *Windows subsystem for Linux* a.ka.
-*Bash on Ubuntu on Windows* or on a Linux virtual machine. Please note that at
-the time of writing this document none of these methods have been tested for
-proper functioning.
+```md
+pip3 install requests beautifulsoup4 lxml
+```
+
+Regardless of OS, run the *test.py* file as mentioned below to ensure that
+everything works properly.
+Make sure you can spot the success message in the output.
+
+Sample output
+```md
+$ python3 test.py https://google.com
+This is a test file and does nothing.
+
+**************************************************
+YOUR TEST IS ALREADY SUCCESSFUL
+The next output is to satisfy Codacy :/
+
+You can safely ignore the output next
+**************************************************
+
+[SOME OUTPUT COMES HERE]
+
+```
+
+If you don't get a similar success message as shown above then try to solve the
+problem by reading the error messages before filing a bug report.
 
 ## A word
 
 Friendly warnings are printed whenever the script is used in an unexpected manner.
 It is therefore advised to read these errors properly and take appropriate action.
 
-If you feel any such warning is a mistake, please create an issue on the
-repository.
+If you feel any such warning is a mistake, please create an issue
+[here.](https://github.com/gadilashashank/Sci-Hub/issues)
 
 An example warning
 
@@ -88,80 +116,13 @@ Use this command to run the script:
 python3 sci_hub.py
 ```
 
-## Installation
-
-Once the requirements have been satisfied, run either **linux_conf.py** or
-**mac_conf.py** if your system is UNIX/Linux or Mac respectively.
-
-Expected output on UNIX/Linux systems
-
-```md
-$ python3 linux_conf.py
-
-sudo password is required to install any missing packages.
-
-Package Manager is apt
-
-[some output comes here]
-
-***********************************************
-	System ready for Sci-Hub Downloader!
-***********************************************
-
-```
-
-Expected output on Mac
-
-```md
-$ python3 mac_conf.py
-
-[some output comes here]
-
-***********************************************
-	Your Mac is ready for Sci-Hub Downloader!
-***********************************************
-
-```
-
-Regardless of your OS run test.py to confirm your system is properly configured
-and everything works
-
-Success
-
-```md
-$ python3 test.py
-Built in modules imported successfully.
-
-External dependencies successfully imported
-
-******************************
-	TEST PASSED
-******************************
-
-```
-
-Failure.
-
-```md
-$ python3 test.py
-Error in importing built in dependencies
-
-Make sure os, sys, re, platform, json modules can be imported
-
-Try reinstalling python3
-
-******************************
-	TEST FAILED
-******************************
-```
-
 ## Usage
 
 After ensuring everything is set, fire up sci_hub.py
 
 ```md
 $ python3 sci_hub.py -h
-usage: sci_hub.py [-h] [-p P] [-b B] target
+usage: sci_hub.py [-h] target
 
 Sci-Hub downloader: Utility to download from Sci-Hub
 
@@ -170,11 +131,7 @@ positional arguments:
 
 optional arguments:
   -h, --help  show this help message and exit
-  -p P        Absolute path to save files to (Default = ~/Downloads/sci_hub)
-  -b B        Command to invoke browser
 ```
-
-The different command line arguments accepted by the script are briefly explained.
 
 ### Target
 
@@ -198,36 +155,26 @@ $ python3 sci_hub.py 10.1109/MS.1987.229797
 $ python3 sci_hub.py https://ieeexplore.ieee.org/document/1695678/
 ```
 
-### -b
-
-This optional argument can be used to specify the command that needs to be
-invoked to open the browser. This argument need not be specified if
-**Mozilla Firefox** is installed and can be invoked with *firefox*
-
-Whenever a captcha is encountered the script can automatically fire up the
-browser and navigate to the download link.
-
-```md
-$ python3 sci_hub.py -b chrome 10.1109/MS.1987.229797
-```
-
-If this argument is not mentioned and a captcha is encountered, then the script
-prints out the download link which can be opened in any browser directly.
-
 ### -h
 
 This flag displays help message.
+
+### Using the script over proxy
+
+If you want the script to send all requests via a proxy then you have to edit
+the **proxy.py** file. By default all proxies are set to none. Relevant usage
+instructions are mentioned in the file itself.
+
+If you know that you need a proxy setting but don't know how to do so, it is
+better if you contact your system administrator.
+
+None of the configuration files run on proxy. So you might need to set the
+dependencies on a connection that does not need proxy.
 
 ## Known issues
 
 Though the script tries its best in doing its job is has few issues/limitations.
 These are mentioned here.
-
-* Proxy
-  * None of the network transactions in the script are configured to run over
-    proxy
-  * If proxy is required, the user should manually alter the script for now.
-    This will be fixed in a later update.
 
 * Unexpected redirects
   * Sometimes sci-hub redirects requests to libgen and can lead to unexpected
@@ -293,5 +240,11 @@ Thus it is assumed that the scripts should function properly on python 3.5+
 provided the dependencies are proper. Functioning in Python 3 versions below
 3.5 are also expected to work without any issues.
 
-Still if there is any problem feel free to create an issue [here](https://github.com/gadilashashank/Sci-Hub/issues) by
-mentioning the relevant details.
+Still if there is any problem feel free to create an issue
+[here](https://github.com/gadilashashank/Sci-Hub/issues) by mentioning the
+relevant details.
+
+While reporting a bug please include the complete output after running test.py
+The output prints out some system related information **none** of which can be
+used to individually identify the user. This information is required **only** for
+debugging purposes and nothing beyond that whatsoever.

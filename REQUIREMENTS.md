@@ -4,11 +4,18 @@
 
 ## Python modules used
 
+### Built-in modules
+
 * argparse
-* bs4
-* lxml parser
+* print_function from \_\_future\_\_
 * os
 * platform
-* print_function from \_\_future\_\_
 * re
+* time
+* webbrowser
+
+### External modules
+
+* bs4
 * requests
+* lxml parser
