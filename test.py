@@ -30,8 +30,9 @@ try:
     import os
     import re
     import time
+    import webbrowser
 except(ImportError):
-    print("Either argparse, os platform or re could not be imported")
+    print("Either argparse, os platform, time, webbrowser or re could not be imported")
     quit()
 
 try:
@@ -61,3 +62,6 @@ if response.status_code == requests.codes.ok:
     print(soup.title.text)
 else:
     print("Something happened")
+
+if re.match("oir", "air"):
+    print("yes")

@@ -17,6 +17,7 @@ import platform
 import proxy
 import re
 import time
+import webbrowser as wbb
 
 # Python 2.x incompatibility
 if int(platform.python_version_tuple()[0]) < 3:
@@ -138,18 +139,9 @@ def download_paper(mirror, args):
     # in firefox
     elif re.match("text/html", response.headers['content-type']):
         print("Looks like captcha encountered.")
-        if not os.system("command -v firefox 1,2>/dev/null"):
-            print("Opening link in firefox...")
-            os.system("firefox {}".format(mirror))
-    # Check for browser command line arg
-        elif args.b:
-            print("Opening link in browser...")
-            os.system("{} {}".format(args.b, mirror))
-    # Print download link
-        else:
-            print("Open this link in a browser.")
-            print(mirror)
-
+        print("Download link is \n" + mirror + "\n")
+        wbb.open_new(mirror)
+        quit()
 
 # Rename and move
 def move_file(doi, args):
