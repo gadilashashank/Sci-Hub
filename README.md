@@ -20,21 +20,33 @@ going through multiple sites that are not legit sci-hub mirrors via a
 
 Hope you like it!
 
-## Requirements
+## Installation
 
-### For UNIX/Linux
+### Windows
 
-* Python 3.x
+This application is **NOT guaranteed** to work on Windows systems directly. It
+is advised to run it on a *Windows subsystem for Linux* a.ka.
+*Bash on Ubuntu on Windows* or on a Linux virtual machine. Please note that at
+the time of writing this document none of these methods have been tested for
+proper functioning.
+
+### GNU/Linux
+
+If you are using a Linux system, simply run the *configure.sh*, which is a bash script
+that tries to install all the dependencies. Currently, this script can
+automatically configure systems which use **apt, dnf, pacman or slackpkg**
+as their package managers.
+
 ```md
-sudo apt update
-sudo apt install python3
+sudo bash configure.sh
 ```
-The command may vary across different package managers but the end goal is to
-install Python 3.x
 
-### For Mac
+Otherwise refer REQUIREMENTS.md file and manually install the mentioned dependencies.
 
-* Homebrew
+### MacOS
+
+Run the following commands
+* Install Homebrew
 
 ```md
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -55,21 +67,20 @@ search should help.
 sudo easy_install python3-pip
 ```
 
-### Windows
+Next run configure.sh file or the following command. I'm not sure if sudo is
+required.
 
-This application is **NOT guaranteed** to work on Windows systems directly. It
-is advised to run it on a *Windows subsystem for Linux* a.ka.
-*Bash on Ubuntu on Windows* or on a Linux virtual machine. Please note that at
-the time of writing this document none of these methods have been tested for
-proper functioning.
+```md
+pip3 install requests beautifulsoup4 lxml
+```
 
 ## A word
 
 Friendly warnings are printed whenever the script is used in an unexpected manner.
 It is therefore advised to read these errors properly and take appropriate action.
 
-If you feel any such warning is a mistake, please create an issue on the
-repository.
+If you feel any such warning is a mistake, please create an issue
+[here.](https://github.com/gadilashashank/Sci-Hub/issues)
 
 An example warning
 
@@ -79,73 +90,6 @@ This script is NOT compatible with Python 2.x
 Use this command to run the script:
 
 python3 sci_hub.py
-```
-
-## Installation
-
-Once the requirements have been satisfied, run either **linux_conf.py** or
-**mac_conf.py** if your system is UNIX/Linux or Mac respectively.
-
-Expected output on UNIX/Linux systems
-
-```md
-$ python3 linux_conf.py
-
-sudo password is required to install any missing packages.
-
-Package Manager is apt
-
-[some output comes here]
-
-***********************************************
-	System ready for Sci-Hub Downloader!
-***********************************************
-
-```
-
-Expected output on Mac
-
-```md
-$ python3 mac_conf.py
-
-[some output comes here]
-
-***********************************************
-	Your Mac is ready for Sci-Hub Downloader!
-***********************************************
-
-```
-
-Regardless of your OS run test.py to confirm your system is properly configured
-and everything works
-
-Success
-
-```md
-$ python3 test.py
-Built in modules imported successfully.
-
-External dependencies successfully imported
-
-******************************
-	TEST PASSED
-******************************
-
-```
-
-Failure.
-
-```md
-$ python3 test.py
-Error in importing built in dependencies
-
-Make sure os, sys, re, platform, json modules can be imported
-
-Try reinstalling python3
-
-******************************
-	TEST FAILED
-******************************
 ```
 
 ## Usage
@@ -211,7 +155,7 @@ prints out the download link which can be opened in any browser directly.
 
 This flag displays help message.
 
-### Use the script over proxy
+### Using the script over proxy
 
 If you want the script to send all requests via a proxy then you have to edit
 the **proxy.py** file. By default all proxies are set to none. Relevant usage
