@@ -55,3 +55,10 @@ Changes in this version include
 
 Instructions to setup proxy can be found in the proxy.py file in the form
 of comments or contact your system administrator for help in setting it up.
+
+## v2.2 (17th July, 2018)
+
+Today's been a long day, I mean two updates on the same day?
+
+* This version includes a software update tool(meh), a python script to pull
+  from remote repository by comparing version numbers.
