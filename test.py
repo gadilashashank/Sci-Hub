@@ -1,3 +1,10 @@
+'''
+This is a test file to check if
+every module works.
+I could have written this off in 10 lines
+but Codacy wanted my imported modules to
+do something.
+'''
 from __future__ import print_function
 import platform
 
@@ -16,40 +23,41 @@ if platform.system() not in ['Linux', 'Darwin']:
     print("If this test is successful then you can run: ")
     print("\npython3 sci_hub.py\n")
 
-# import built in dependencies and check
+print("This is a test file and does nothing.")
+
 try:
     import argparse
     import os
+    import platform
     import re
-    import sys
-    print("Built in modules imported successfully.\n")
 except(ImportError):
-    print("Error in importing built in dependencies\n")
-    print("Make sure os, sys, re, platform, modules can be imported\n")
-    print("Try reinstalling python3\n")
-    print("*"*30 + "\n" + "\tTEST FAILED" + "\n" + "*"*30)
+    print("Either argparse, os platform or re could not be imported")
     quit()
 
 try:
-    from bs4 import BeautifulSoup
+    from bs4 import BeautifulSoup as bs
     import requests
-    print("External dependencies successfully imported\n")
 except(ImportError):
-    print("Error in importing external dependencies.\n")
-    print("Run appropriate configuration file.\n")
-    print("Make sure bs4 and requests are importable.\n")
-    print("*"*30 + "\n" + "\tTEST FAILED" + "\n" + "*"*30)
+    print("Either requests or BeautifulSoup could not be imported")
     quit()
 
-print("*"*30 + "\n" + "\tTEST PASSED" + "\n" + "*"*30)
+parser = argparse.ArgumentParser(description="The most useless python script \
+                                              written by me")
+parser.add_argument("target", help="enter any random URL")
+args = parser.parse_args()
 
-def main():
-    resp = requests.get("https://google.com")
-    soup = BeautifulSoup(resp.content, "lxml")
-    print("soup.title")
-    re.match("fojwe", "orji")
-    print(sys.version)
-    parser = argparse.ArgumentParser()
-    print(parser.parse_args)
+print("\n" + "*"*50 + "\n" + "YOUR TEST IS ALREADY SUCCESSFUL")
+print("The next output is to satisfy Codacy :/\n")
+print( "You can safely ignore the output next\n" + "*"*50 + "\n")
 
-main()
+
+print(os.listdir("./"))
+print(platform.system())
+
+print(args)
+response = requests.get(args.target)
+if response.status_code == requests.codes.ok:
+    soup = bs(response.content, "lxml")
+    print(soup.title.text)
+else:
+    print("Something happened")
