@@ -29,6 +29,7 @@ try:
     import argparse
     import os
     import re
+    import time
 except(ImportError):
     print("Either argparse, os platform or re could not be imported")
     quit()
@@ -48,7 +49,7 @@ args = parser.parse_args()
 print("\n" + "*"*50 + "\n" + "YOUR TEST IS ALREADY SUCCESSFUL")
 print("The next output is to satisfy Codacy :/\n")
 print("You can safely ignore the output next\n" + "*"*50 + "\n")
-
+time.sleep(5)
 
 print(os.listdir("./"))
 print(platform.system())

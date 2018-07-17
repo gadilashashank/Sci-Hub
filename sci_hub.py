@@ -16,6 +16,7 @@ import os
 import platform
 import proxy
 import re
+import time
 
 # Python 2.x incompatibility
 if int(platform.python_version_tuple()[0]) < 3:
@@ -124,7 +125,7 @@ def download_paper(mirror, args):
     print("Sending request")
     response = requests.get(mirror, proxies=proxy.proxies)
     print("Response received. Analyzing...\n")
-    os.system("sleep 1")
+    time.sleep(1)
     # If header states PDF then write
     # content to file
     if response.headers['content-type'] == "application/pdf":
@@ -156,18 +157,18 @@ def move_file(doi, args):
         name = doi.replace("/", "_") + ".pdf"
         if os.path.exists("./wuieobgefn.pdf"):
             if not args.p:
-                os.system("mv ./wuieobgefn.pdf {}".format(name))
-                os.system("mkdir ~/Downloads/sci_hub/ 2>/dev/null")
+                os.rename("wuieobgefn.pdf", name)
+                os.system("mkdir ~/Downloads/sci_hub/")
                 os.system("mv {} ~/Downloads/sci_hub/".format(name))
                 print("Files saved in ~/Downloads/sci_hub/ as {}".format(name))
             elif args.p and os.path.exists(args.p):
-                os.system("mv ./wuieobgefn.pdf {}".format(name))
+                os.rename("wuieobgefn.pdf", name)
                 os.system("mv {} {}".format(name, args.p))
                 print("Files saved at {} as {}".format(args.p, name))
             else:
                 print("Looks like mentioned path does not exist")
                 print("Saving file at {} as {}".format(os.system("pwd"), name))
-                os.system("mv ./wuieobgefn.pdf {}".format(name))
+                os.rename("wuieobgefn.pdf", name)
     else:
         print("File saved as wuieobgefn.pdf in current directory")
 
@@ -188,7 +189,7 @@ def main():
         if not mirror:
             print("Download link not available")
             print("Please try after sometime")
-            os.system("sleep 10")
+            time.sleep(10)
             quit()
         else:
             print("Downloading paper...")
