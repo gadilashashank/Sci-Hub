@@ -62,3 +62,14 @@ Today's been a long day, I mean two updates on the same day?
 
 * This version includes a software update tool(meh), a python script to pull
   from remote repository by comparing version numbers.
+
+## v.2.3 (5th 5 September, 2018)
+
+This change log thing is a bit boring,,, maybe I gotta hire a writer? :P Anyways
+
+**Backwards incompatibility arises in this release.**
+
+* Proxy configuration depends on system/environment settings
+* --view optional flag to view articles without downloading
+* Faster retrieval of DOI and Download links
+* Made the testing/debugging script more useful. (Again no personal data collected)
