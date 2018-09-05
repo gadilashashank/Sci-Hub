@@ -1,7 +1,13 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f10b5a4f5f73497399d175f613824574)](https://www.codacy.com/app/shashankgadila/Sci-Hub?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gadilashashank/Sci-Hub&amp;utm_campaign=Badge_Grade)
+<<<<<<< HEAD
+![Version 2.3](https://img.shields.io/badge/Version-2.3-brightgreen.svg)
+![Release 5September, 2018](https://img.shields.io/badge/Release-5September,2018-8000bf.svg)
+![License AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-00688B.svg)
+=======
 ![Version 2.2](https://img.shields.io/badge/Version-2.2-brightgreen.svg)
 ![Release 17July, 2018](https://img.shields.io/badge/Release-17July,2018-8000bf.svg)
 ![License AGPL-3.0](https://img.shields.io/badge/Lincense-AGPL--3.0-00688B.svg)
+>>>>>>> master
 ![Author Gadila Shashank Reddy](https://img.shields.io/badge/Author-Gadila_Shashank_Reddy-0066cc.svg)
 
 # Sci-Hub Downloader
@@ -14,22 +20,16 @@ of what you choose to do with this application.
 
 ## About
 
-*Sci-Hub downloader* is a simple python script that attempts to automatically
-download papers from sci-hub without the hassle of finding a working mirror or
-going through multiple sites that are not legit sci-hub mirrors via a
-*Command Line Interface*.
+*Sci-Hub downloader* is a command line wrapper of Sci-Hub written in Python. You can use the script to download research articles from your terminal itself.  
 
-Hope you like it!
+Hope you find it useful.
 
 ## Installation
 
 ### Windows
 
-This application is **NOT guaranteed** to work on Windows systems directly. It
-is advised to run it on a *Windows subsystem for Linux* a.ka.
-*Bash on Ubuntu on Windows* or on a Linux virtual machine. Please note that at
-the time of writing this document none of these methods have been tested for
-proper functioning.
+This application is not designed/tested to run on Windows machines natively . So if you are using Windows either you need to modify the script to run natively, or in a Virtual Machine with any Linux OS, installed or on Windows Subsystem for Linux.
+
 
 ### GNU/Linux
 
@@ -91,7 +91,7 @@ The next output is to satisfy Codacy :/
 You can safely ignore the output next
 **************************************************
 
-[SOME OUTPUT COMES HERE]
+[SOME DEBUG OUTPUT COMES HERE]
 
 ```
 
@@ -122,7 +122,7 @@ After ensuring everything is set, fire up sci_hub.py
 
 ```md
 $ python3 sci_hub.py -h
-usage: sci_hub.py [-h] target
+usage: sci_hub.py [-h] [--view] target
 
 Sci-Hub downloader: Utility to download from Sci-Hub
 
@@ -131,6 +131,7 @@ positional arguments:
 
 optional arguments:
   -h, --help  show this help message and exit
+  --view      Open article in browser for reading
 ```
 
 ### Target
@@ -153,23 +154,43 @@ Example usage
 ```md
 $ python3 sci_hub.py 10.1109/MS.1987.229797
 $ python3 sci_hub.py https://ieeexplore.ieee.org/document/1695678/
+$ python3 sci_hub.py --view 10.1109/MS.1987.229797
 ```
 
 ### -h
 
 This flag displays help message.
 
+### --view
+
+This optional flag specifies the script to open the article in a browser window without downloading.
+
 ### Using the script over proxy
 
-If you want the script to send all requests via a proxy then you have to edit
-the **proxy.py** file. By default all proxies are set to none. Relevant usage
-instructions are mentioned in the file itself.
+```
+BACKWARDS INCOMPATIBILITY ALERT!!!
+This feature is depreciated.
+```
 
-If you know that you need a proxy setting but don't know how to do so, it is
-better if you contact your system administrator.
+In the previous version there was a separate file to specify proxy configurations for all network transactions. From current version onwards this feature is reverted/depreciated because it clashed with system proxy settings.
 
-None of the configuration files run on proxy. So you might need to set the
-dependencies on a connection that does not need proxy.
+From v2.2 onwards to use the script over proxy, specify proxy environment variables or make appropriate changes to your system's proxy settings.
+
+### Download/storage
+
+If the script downloads an article, its location is printed. By default all files are downloaded to a Downloads folder in the working directory of the script.
+
+```md
+Downloaded 0.32 MB
+
+Files saved at ./Downloads/10.1007_978-3-540-74496-2_36.pdf
+```
+
+### Updating to newer versions
+
+A simple ```git pull``` from the cloned repository should do the trick.
+
+
 
 ## Known issues
 
@@ -192,12 +213,10 @@ Validating https://sci-hub.tw/
 https://sci-hub.tw/ validated
 
 Extracting download links...
-Traceback (most recent call last):
-  File "sci_hub.py", line 193, in <module>
-    main()
-  File "sci_hub.py", line 181, in main
-    doi, mirror = get_links(url)
-TypeError: 'NoneType' object is not iterable
+Mirror not found
+DOI not found
+Download link not available
+Please try after sometime
 ```
 
 Success by altering target
@@ -216,13 +235,10 @@ Response received. Analyzing...
 
 Downloaded 0.32 MB
 
-Files saved in ~/Downloads/sci_hub/ as 10.1007_978-3-540-74496-2_36.pdf
-```
+Files saved at ./Downloads/10.1007_978-3-540-74496-2_36.pdf
 
-* DOI not assigned
-  * The file is saved in PDF format by replacing "/" in
-	  the respective DOI with '\_' in the mentioned path.
-  * If DOI is not found then is is left as wuieobgefn.pdf in the mentioned path.
+Thanks for using.
+```
 
 * Any issue that did not arise during development/testing.
 
@@ -234,7 +250,7 @@ This script is **NOT** meant to be used for python version 2.x
 The scripts have been developed and thoroughly tested on the following platforms
 
 * An Ubuntu 16.04 LTS machine running Python 3.5.2
-* Arch Linux machine running Python 3.6.6
+* Arch Linux machine running Python 3.6.6 and 3.7.0
 
 Thus it is assumed that the scripts should function properly on python 3.5+
 provided the dependencies are proper. Functioning in Python 3 versions below

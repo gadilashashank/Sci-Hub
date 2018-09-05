@@ -13,7 +13,6 @@ purpose other than fixing errors and mistakes.
 '''
 from __future__ import print_function
 import platform
-import proxy_conf
 print()
 
 
@@ -48,6 +47,12 @@ except(ImportError):
     print("Either requests or BeautifulSoup could not be imported")
     quit()
 
+parser = argparse.ArgumentParser(description="The most useless python script \
+                                              written by me")
+parser.add_argument("target", help="enter any random URL")
+args = parser.parse_args()
+
+
 print('''
 This file prints some useful system
 information for DEBUGGING purposes only
@@ -69,18 +74,11 @@ purpose other than what is said.
 time.sleep(15)
 
 
-parser = argparse.ArgumentParser(description="The most useless python script \
-                                              written by me")
-parser.add_argument("target", help="enter any random URL")
-args = parser.parse_args()
-
 print("\n" + "*"*50 + "\n" + "YOUR TEST IS ALREADY SUCCESSFUL")
 print("The next output is for debugging purposes :/\n")
 print("You can safely ignore it if you don't have problems\n" + "*"*50 + "\n")
 time.sleep(5)
 
-print(proxy_conf.proxies)
-print()
 
 print(os.listdir("./"))
 print()
@@ -93,17 +91,17 @@ if response.status_code == requests.codes.ok:
     try:
         soup = bs(response.content, "lxml")
     except Exception:
-        print("Check is lxml parser is installed")
+        print("Check if lxml parser is installed")
     print(soup.title.text)
 else:
     print("Something happened")
 
-if re.match("oir", "air"):
-    print("yes")
+if re.match("air", "air"):
+    print("Regular expression test passed")
 
 print("\nNow your default web browser will open")
 print("Don't be scared, I haven't hacked your computer :P\n")
 print("If it doesn't then try setting a default browser"
       + " for the script to work properly")
 time.sleep(2)
-print(webbrowser.open_new("https://google.com"))
+print("Web browser opened: " + str(webbrowser.open_new("https://google.com")))

@@ -10,7 +10,9 @@
 * print_function from \_\_future\_\_
 * os
 * platform
+* random
 * re
+* string
 * time
 * webbrowser
 
