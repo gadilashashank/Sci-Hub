@@ -14,10 +14,10 @@ from __future__ import print_function
 import argparse
 import os
 import platform
-import proxy_conf
+from random import randint, choice
 import re
+import string
 import time
-import update
 import webbrowser as wbb
 
 # Python 2.x incompatibility
@@ -39,18 +39,16 @@ import requests
 parser = argparse.ArgumentParser(description="Sci-Hub downloader: Utility to \
                                              download from Sci-Hub")
 parser.add_argument("target",
-                    help="URL/DOI to download PDF")
+                    help="URL/DOI to download PDF", type=str)
+parser.add_argument("--view", help="Open article in browser for reading", action="store_true")
 args = parser.parse_args()
-
-update.check_update()
 
 
 # Get Sci-Hub URL from Google
 def get_url():
     print("Trying primary method.")
     # Query Google and create soup object.
-    response = requests.get("https://www.google.com/search?&q=sci-hub",
-                            proxies=proxy_conf.proxies)
+    response = requests.get("https://www.google.com/search?&q=sci-hub")
     soup = bs(response.content, "lxml")
     # Target url is inside a cite tag.
     url = soup.cite.text
@@ -69,8 +67,7 @@ def try_alternate():
     print("Trying alternate method.")
     # Query twitter page of Sci-Hub
     # and create soup object
-    response = requests.get("https://twitter.com/Sci_Hub",
-                            proxies=proxy_conf.proxies)
+    response = requests.get("https://twitter.com/Sci_Hub")
     soup = bs(response.content, "lxml")
     # Try to extract the URL present
     # in the side panel as alt_url
@@ -91,9 +88,12 @@ def try_alternate():
 # Validate URL by checking title
 def validate_url(url):
     print("Validating {}".format(url))
+    if url == "":
+        print("URL not valid")
+        return ""
     # Send request to given url
     # and compare title tags
-    response = requests.get(url, proxies=proxy_conf.proxies)
+    response = requests.get(url)
     soup = bs(response.content, "lxml")
     if soup.title.text == "Sci-Hub: removing barriers in the way of science":
         print("{} validated\n".format(url))
@@ -107,27 +107,36 @@ def validate_url(url):
 def get_links(target):
     # Get response of target page
     # from Sci-Hub and create soup object
-    response = requests.get(target, proxies=proxy_conf.proxies)
+    response = requests.get(target)
     soup = bs(response.content, "lxml")
     # Extract DOI
-    for i in soup.find_all("div", attrs={"class": "button", "id": "reload"}):
-        doi = i.p.a['href'].replace("//sci-hub.tw/reload/", "")
+    try:
+        mirror = soup.find("iframe", attrs={"id": "pdf"})['src'].split("#")[0]
+    except Exception:
+        print("Mirror not found")
+        mirror = ""
+    try:
+        doi = soup.title.text.split("|")[2].strip()
+    except Exception:
+        print("DOI not found")
+        doi = ""
     # Extract download link
-    for i in soup.find_all("div", attrs={"class": "button", "id": "save"}):
-        mirror = i.p.a['onclick'].split("'")[1]
-        return doi, mirror
+    return doi, mirror
 
 
 # Download paper
 def download_paper(mirror, args):
     # Response from mirror link
     print("Sending request")
-    response = requests.get(mirror, proxies=proxy_conf.proxies)
+    response = requests.get(mirror)
     print("Response received. Analyzing...\n")
-    time.sleep(1)
     # If header states PDF then write
     # content to file
-    if response.headers['content-type'] == "application/pdf":
+    if args.view:
+        print("Firing up your browser...")
+        wbb.open_new(mirror)
+        quit()
+    elif response.headers['content-type'] == "application/pdf":
         size = round(int(response.headers['Content-Length'])/1000000, 2)
         print("Downloaded {} MB\n".format(size))
         with open("./Downloads/wuieobgefn.pdf", "wb") as f:
@@ -151,7 +160,12 @@ def move_file(doi, args):
             os.rename("./Downloads/wuieobgefn.pdf", "./Downloads/" + name)
             print("Files saved at ./Downloads/" + name)
     else:
-        print("File saved as wuieobgefn.pdf in ./Downloads directory")
+        new_name = "".join(choice(string.ascii_letters + string.digits)
+                           for x in range(randint(8, 12))) + ".pdf"
+        if os.path.exists("./Downloads/wuieobgefn.pdf"):
+            os.rename("./Downloads/wuieobgefn.pdf", "./Downloads/" + new_name)
+        print("Files saved at ./Downloads/" + new_name)
+        print("You might want to rename this file!")
 
 
 # Main function
