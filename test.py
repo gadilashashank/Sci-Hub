@@ -32,9 +32,7 @@ if platform.system() not in ['Linux', 'Darwin']:
 try:
     import argparse
     import os
-    from random import randint, choice
     import re
-    import string
     import time
     import webbrowser
 except(ImportError):

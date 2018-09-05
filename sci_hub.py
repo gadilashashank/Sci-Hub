@@ -14,9 +14,7 @@ from __future__ import print_function
 import argparse
 import os
 import platform
-from random import randint, choice
 import re
-import string
 import time
 import webbrowser as wbb
 
@@ -160,12 +158,7 @@ def move_file(doi, args):
             os.rename("./Downloads/wuieobgefn.pdf", "./Downloads/" + name)
             print("Files saved at ./Downloads/" + name)
     else:
-        new_name = "".join(choice(string.ascii_letters + string.digits)
-                           for x in range(randint(8, 12))) + ".pdf"
-        if os.path.exists("./Downloads/wuieobgefn.pdf"):
-            os.rename("./Downloads/wuieobgefn.pdf", "./Downloads/" + new_name)
-        print("Files saved at ./Downloads/" + new_name)
-        print("You might want to rename this file!")
+        print("Files saved at ./Downloads/wuieobgefn.pdf")
 
 
 # Main function
