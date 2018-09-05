@@ -16,6 +16,7 @@ import os
 import platform
 import re
 import time
+import update
 import webbrowser as wbb
 
 # Python 2.x incompatibility
@@ -40,6 +41,8 @@ parser.add_argument("target",
                     help="URL/DOI to download PDF", type=str)
 parser.add_argument("--view", help="Open article in browser for reading", action="store_true")
 args = parser.parse_args()
+
+update.check_update()
 
 
 # Get Sci-Hub URL from Google
