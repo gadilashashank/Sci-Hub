@@ -26,6 +26,7 @@ if int(platform.python_version_tuple()[0]) < 3:
     print("python3 sci_hub.py\n")
     quit()
 
+# Warning for any platform other than *NIX
 if platform.system() not in ['Linux', 'Darwin']:
     print("\nYOU HAVE BEEN WARNED")
     print("Looks like you are not running on GNU/Linux or a Mac")
