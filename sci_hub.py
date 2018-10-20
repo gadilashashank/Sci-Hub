@@ -16,7 +16,6 @@ import os
 import platform
 import re
 import time
-import update
 import webbrowser as wbb
 
 # Python 2.x incompatibility
@@ -26,6 +25,7 @@ if int(platform.python_version_tuple()[0]) < 3:
     print("python3 sci_hub.py\n")
     quit()
 
+# Warning for any platform other than *NIX
 if platform.system() not in ['Linux', 'Darwin']:
     print("\nYOU HAVE BEEN WARNED")
     print("Looks like you are not running on GNU/Linux or a Mac")
@@ -42,7 +42,6 @@ parser.add_argument("target",
 parser.add_argument("--view", help="Open article in browser for reading", action="store_true")
 args = parser.parse_args()
 
-update.check_update()
 
 
 # Get Sci-Hub URL from Google
@@ -180,6 +179,8 @@ def main():
         if not mirror:
             print("Download link not available")
             print("Please try after sometime")
+            print("\nAlso try prepending ' http://dx.doi.org/' to input")
+            print("If it still doesn't work raise an issue at https://github.com/gadilashashank/Sci-Hub/issues")
             time.sleep(10)
             quit()
         else:
