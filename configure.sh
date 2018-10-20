@@ -1,8 +1,8 @@
+#!/bin/bash
 # Configuration script for GNU/LINUX systems
 # Should Work for any distro which uses
 # apt, dnf, pacman or slackpkg
 
-#!/bin/bash
 
 # User information about need of sudo priviledges
 echo "sudo password maybe required to installed missing packages if any."
