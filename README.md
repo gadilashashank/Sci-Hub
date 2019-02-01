@@ -1,3 +1,9 @@
+# ChangeLog
+* [x] fix URL issue: all URLs in contents start with `//`
+* [x] Add proxy to `requests`, test only default `socks5://127.0.0.1:1080`, `requests` must be proxy supported version.
+
+**Origin README from gadilashashank/Sci-Hub**
+
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f10b5a4f5f73497399d175f613824574)](https://www.codacy.com/app/shashankgadila/Sci-Hub?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gadilashashank/Sci-Hub&amp;utm_campaign=Badge_Grade)
 ![Version 2.3](https://img.shields.io/badge/Version-2.3-brightgreen.svg)
 ![Release 5September, 2018](https://img.shields.io/badge/Release-5September,2018-8000bf.svg)
