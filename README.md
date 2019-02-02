@@ -1,6 +1,7 @@
 # ChangeLog
 * [x] fix URL issue: all URLs in contents start with `//`
 * [x] Add proxy to `requests`, test only default `socks5://127.0.0.1:1080`, `requests` must be proxy supported version.
+* [x] fix URL protocol issue in Google search result
 
 **Origin README from gadilashashank/Sci-Hub**
 

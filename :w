@@ -45,6 +45,7 @@ parser.add_argument('--proxy',
                     help='requests proxy support. default:' +
                     'socks5://127.0.0.1:1080')
 parser.add_argument('--proxy_enable',
+                    default='False',
                     action='store_true')
 parser.add_argument("--view", help="Open article in browser for reading",
                     action="store_true")
@@ -60,7 +61,6 @@ def get_url():
     print("Trying primary method.")
     # Query Google and create soup object.
     if args.proxy_enable:
-        global proxies
         response = requests.get("https://www.google.com/search?&q=sci-hub",
                                 proxies=proxies)
     else:
@@ -70,13 +70,8 @@ def get_url():
     url = soup.cite.text
     # Regex check for URL. Returns empty string if
     # no match
-    if re.match('(https?://)?sci-hub.[a-z]{2,}', url):
-        if not url.startswith('http://') and not url.startswith('https://'):
-            # if url has no proto prefix, add 'http://' by default
-            url = 'http://' + url
-        if url[-1] != '/':
-            url += '/'
-        print("url from primary method is: " + url + "\n")
+    if re.match('http[s]?://sci-hub.[a-z]{2,}', url):
+        print("URL from primary method is: " + url + "\n")
         return url
     else:
         print("URL from primary method not found.\n")
@@ -118,8 +113,8 @@ def validate_url(url):
         return ""
     # Send request to given url
     # and compare title tags
+    global proxies
     if args.proxy_enable:
-        global proxies
         response = requests.get(url, proxies=proxies)
     else:
         response = requests.get(url)
@@ -136,8 +131,8 @@ def validate_url(url):
 def get_links(target):
     # Get response of target page
     # from Sci-Hub and create soup object
+    global proxies
     if args.proxy_enable:
-        global proxies
         response = requests.get(target, proxies=proxies)
     else:
         response = requests.get(target)
@@ -164,8 +159,8 @@ def get_links(target):
 def download_paper(mirror, args):
     # Response from mirror link
     print("Sending request")
+    global proxies
     if args.proxy_enable:
-        global proxies
         response = requests.get(mirror, proxies=proxies)
     else:
         response = requests.get(mirror)
@@ -207,7 +202,6 @@ def move_file(doi, args):
 def main():
     if args.proxy_enable:
         if len(args.proxy) != 0:
-            global proxies
             proxies['http'] = args.proxy
             proxies['https'] = args.proxy
     sci_hub = validate_url(get_url())
