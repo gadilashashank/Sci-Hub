@@ -1,10 +1,3 @@
-# ChangeLog
-* [x] fix URL issue: all URLs in contents start with `//`, e.g., `//sci-hub.tw/cite/10.1016/S1361-3723(17)30089-1`
-* [x] Add proxy to `requests`, test only default `socks5://127.0.0.1:1080`, `requests` must be proxy supported version. (`TODO`: test)
-* [x] fix URL protocol issue in Google search result, e.g. URL in results is `sci-hub.tw/` instead of `http://sci-hub.tw/`
-
-**Origin README from gadilashashank/Sci-Hub**
-
 ![Version 2.3](https://img.shields.io/badge/Version-2.3-brightgreen.svg)
 ![Release 5September, 2018](https://img.shields.io/badge/Release-5September,2018-8000bf.svg)
 ![License AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-00688B.svg)
