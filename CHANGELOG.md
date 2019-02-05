@@ -73,3 +73,9 @@ This change log thing is a bit boring,,, maybe I gotta hire a writer? :P Anyways
 * --view optional flag to view articles without downloading
 * Faster retrieval of DOI and Download links
 * Made the testing/debugging script more useful. (Again no personal data collected)
+
+[@DCMMC](https://github.com/DCMMC), Feb 5, 2019
+
+* [x] fix URL issue: all URLs in contents start with `//`, e.g., `//sci-hub.tw/cite/10.1016/S1361-3723(17)30089-1`
+* [x] Add proxy to `requests`, test only default `socks5://127.0.0.1:1080`, `requests` must be proxy supported version. (`TODO`: test)
+* [x] fix URL protocol issue in Google search result, e.g. URL in results is `sci-hub.tw/` instead of `http://sci-hub.tw/`
