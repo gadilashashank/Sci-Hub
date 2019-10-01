@@ -47,20 +47,9 @@ args = parser.parse_args()
 # Get Sci-Hub URL from Google
 def get_url():
     print("Trying primary method.")
-    # Query Google and create soup object.
-    response = requests.get("https://www.google.com/search?&q=sci-hub")
-    soup = bs(response.content, "lxml")
-    # Target url is inside a cite tag.
-    url = soup.cite.text
-    # Regex check for URL. Returns empty string if
-    # no match
-    if re.match('http[s]?://sci-hub.[a-z]{2,}', url):
-        print("URL from primary method is: " + url + "\n")
-        return url
-    else:
-        print("URL from primary method not found.\n")
-        return ''
-
+    # Use where is sci hub now api service
+    response = requests.get("https://whereisscihub.now.sh/api")
+    return response.json()
 
 # Alterane URL from Twitter
 def try_alternate():
