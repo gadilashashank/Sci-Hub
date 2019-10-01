@@ -49,11 +49,6 @@ parser.add_argument('--proxy_enable',
 parser.add_argument("--view", help="Open article in browser for reading",
                     action="store_true")
 args = parser.parse_args()
-proxies = {
-    "http": "socks5://127.0.0.1:1080",
-    "https": "socks5://127.0.0.1:1080",
-}
-
 
 # Get Sci-Hub URL from Google
 def get_url():
