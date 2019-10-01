@@ -31,18 +31,17 @@ if platform.system() not in ['Linux', 'Darwin']:
     print("Looks like you are not running on GNU/Linux or a Mac")
     print("This program is not guarenteed to work on Windows\n")
 
-from bs4 import BeautifulSoup as bs
-import requests
+from bs4 import BeautifulSoup as bs  # noqa: E402
+import requests  # noqa: E402
 
 # Define command line arguments
 parser = argparse.ArgumentParser(description="Sci-Hub downloader: Utility to \
                                              download from Sci-Hub")
 parser.add_argument("target",
                     help="URL/DOI to download PDF", type=str)
-parser.add_argument("--view", help="Open article in browser for reading", action="store_true")
+parser.add_argument("--view", help="Open article in browser for reading",
+                    action="store_true")
 args = parser.parse_args()
-
-
 
 # Get Sci-Hub URL from Google
 def get_url():
@@ -75,21 +74,20 @@ def try_alternate():
 
 
 # Validate URL by checking title
-def validate_url(url):
-    print("Validating {}".format(url))
-    if url == "":
-        print("URL not valid")
-        return ""
-    # Send request to given url
-    # and compare title tags
-    response = requests.get(url)
-    soup = bs(response.content, "lxml")
-    if soup.title.text == "Sci-Hub: removing barriers in the way of science":
-        print("{} validated\n".format(url))
-        return url
-    else:
-        print("{} not valid.".format(url))
-        return ""
+def validate_url(url_list):
+    for url in url_list:
+        print("Validating {}".format(url))
+        if url == "":
+            print("URL not valid")
+        # Send request to given url
+        # and compare title tags
+        response = requests.get(url)
+        soup = bs(response.content, "lxml")
+        if soup.title.text == "Sci-Hub: removing barriers in the way of science":
+            print("{} validated\n".format(url))
+            return url
+
+    return ""
 
 
 # Extract DOI, Mirror
@@ -101,6 +99,9 @@ def get_links(target):
     # Extract DOI
     try:
         mirror = soup.find("iframe", attrs={"id": "pdf"})['src'].split("#")[0]
+        if mirror.startswith('//'):
+            mirror = mirror[2:]
+            mirror = 'https://' + mirror
     except Exception:
         print("Mirror not found")
         mirror = ""
@@ -169,7 +170,8 @@ def main():
             print("Download link not available")
             print("Please try after sometime")
             print("\nAlso try prepending ' http://dx.doi.org/' to input")
-            print("If it still doesn't work raise an issue at https://github.com/gadilashashank/Sci-Hub/issues")
+            print("If it still doesn't work raise an issue at " +
+                  "https://github.com/gadilashashank/Sci-Hub/issues")
             time.sleep(10)
             quit()
         else:
