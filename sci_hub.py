@@ -85,6 +85,8 @@ def validate_url(url_list):
         soup = bs(response.content, "lxml")
         if soup.title.text == "Sci-Hub: removing barriers in the way of science":
             print("{} validated\n".format(url))
+            if url[-1] != "/":
+                url += "/"
             return url
 
     return ""
